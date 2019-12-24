@@ -4,26 +4,42 @@
 const express = require('express');
 const router = new express.Router();
 
+const errorFormat = require('./errorFormat');
 const Apartment = require('../models/Apartment');
 
 router.get('/api/apartments', async (req, res) => {
   try {
+    console.log('getting apts');
     const apartments = await Apartment.find({});
-
+    console.log('got apts');
     res.send(apartments);
   } catch (e) {
     res.status(500).send({ error: e.message });
   }
 });
 
+router.get('/api/apartments/:id', async (req, res) => {
+  try {
+    const apartment = await Apartment.findById(req.params.id);
+
+    if (!apartment) {
+      return res.status(404).send();
+    }
+    res.send(apartment);
+  } catch (e) {
+    res.status(400).send({ error: e.message });
+  }
+});
+
 router.post('/api/apartments', async (req, res) => {
-  console.log('POST');
   const apartment = new Apartment(req.body);
 
   try {
-    const doc = await apartment.save();
-
-    res.status(201).send({ doc });
+    const errors = await apartment.save();
+    if (Array.isArray(errors) && errors.length > 0) {
+      return res.status(400).send(errorFormat(errors));
+    }
+    return res.status(201).send(apartment.obj());
   } catch (e) {
     console.log(e);
     res.status(400).send({ error: e.message });
@@ -51,6 +67,21 @@ router.patch('/api/apartments/:id', async (req, res) => {
   }
 
   try {
+    const apartment = await Apartment.findById(req.params.id);
+
+    //updates.forEach(update => apartment.setValue(update, req.body[update]));
+    updates.forEach(update => {
+      apartment.setValue(update, req.body[update]);
+    });
+    await apartment.save();
+    res.status(200).send(apartment);
+  } catch (e) {
+    res.status(400).send({ error: e.message });
+  }
+});
+
+router.delete('/api/apartments/:id', async (req, res) => {
+  try {
     const data = await Apartment.findById(req.params.id);
     const apartment = new Apartment(data);
 
@@ -58,24 +89,7 @@ router.patch('/api/apartments/:id', async (req, res) => {
       return res.status(404).send();
     }
 
-    updates.forEach(update => apartment.set(update, req.body[update]));
-    await apartment.save();
-    res.send(apartment.obj());
-  } catch (e) {
-    console.log(e);
-    res.status(400).send({ error: e.message });
-  }
-});
-
-router.delete('/api/apartments/:id', async (req, res) => {
-  try {
-    const apartment = await Apartment.findById(req.params.id);
-
-    if (!apartment) {
-      return res.status(404).send();
-    }
-
-    const result = apartment.remove();
+    const result = await apartment.remove();
     if (result === true) {
       return res.status(200).send();
     } else {

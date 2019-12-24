@@ -1,10 +1,9 @@
 /**
  * Apartment model
  */
-const Schema = require('validate');
-const db = require('../db/db.js');
+const db = require('../firestore/db.js');
 
-const schema = new Schema({
+const fields = {
   name: {
     type: String,
     required: true,
@@ -29,7 +28,10 @@ const schema = new Schema({
   },
   contact: {
     type: String,
-    trim: true
+    trim: true,
+    required: true,
+    maxlength: 6,
+    minlength: 3
   },
   available: {
     type: String,
@@ -39,6 +41,8 @@ const schema = new Schema({
     type: Boolean,
     default: true
   }
-});
+};
 
-module.exports = db.model('apartments', schema);
+const Apartment = db.model('apartments', fields);
+
+module.exports = Apartment;
