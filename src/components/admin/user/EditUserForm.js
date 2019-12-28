@@ -12,7 +12,7 @@ const EditUserForm = ({ user }) => {
   const onCancel = () => history.push('/admin/users');
   const onSubmit = (data, e) => {
     e.preventDefault();
-    store.update(user._id, data);
+    store.update(user.id, data);
   };
 
   return user ? (

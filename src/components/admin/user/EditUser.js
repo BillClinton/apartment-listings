@@ -7,7 +7,7 @@ const EditUser = ({ match }) => {
   const id = match.params.id;
   let user = store.edit;
 
-  if (!user || user._id !== id) {
+  if (!user || user.id !== id) {
     user = null;
     store.loadOne(id);
   }

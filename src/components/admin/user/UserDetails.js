@@ -10,10 +10,10 @@ const UserDetails = ({ user }) => {
       <div>{user.surname}</div>
       <div>{user.email}</div>
       <div>
-        <Link to={`/admin/users/edit/${user._id}`}>
+        <Link to={`/admin/users/edit/${user.id}`}>
           <EditIcon />
         </Link>
-        <Link to={`/admin/users/delete/${user._id}`}>
+        <Link to={`/admin/users/delete/${user.id}`}>
           <DeleteIcon />
         </Link>
       </div>

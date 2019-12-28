@@ -23,7 +23,7 @@ const UserList = () => {
         </li>
         {users.length ? (
           users.map(user => {
-            return <UserDetails user={user} key={user._id} />;
+            return <UserDetails user={user} key={user.id} />;
           })
         ) : (
           <div className={styles.loading}>loading</div>

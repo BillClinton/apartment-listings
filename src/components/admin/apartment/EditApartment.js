@@ -7,7 +7,7 @@ const EditApartment = ({ match }) => {
   const id = match.params.id;
   let apartment = store.edit;
 
-  if (!apartment || apartment._id !== id) {
+  if (!apartment || apartment.id !== id) {
     apartment = null;
     store.loadOne(id);
   }

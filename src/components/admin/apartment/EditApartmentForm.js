@@ -12,7 +12,7 @@ const EditApartmentForm = ({ apartment }) => {
   const onCancel = () => history.push('/admin/apartments');
   const onSubmit = (data, e) => {
     e.preventDefault();
-    store.update(apartment._id, data);
+    store.update(apartment.id, data);
   };
 
   return apartment ? (

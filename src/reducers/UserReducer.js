@@ -28,7 +28,7 @@ export default (state = {}, action) => {
     case UPDATE_USER: {
       const users = state.users;
       const user = action.payload;
-      const index = users.findIndex(item => item._id === user._id);
+      const index = users.findIndex(item => item.id === user.id);
 
       if (~index) {
         users[index] = user;
@@ -38,7 +38,7 @@ export default (state = {}, action) => {
     }
 
     case DELETE_USER: {
-      const users = state.users.filter(apt => apt._id !== action.payload);
+      const users = state.users.filter(apt => apt.id !== action.payload);
       return { ...state, users: users };
     }
 

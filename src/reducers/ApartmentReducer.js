@@ -26,7 +26,7 @@ export default (state = {}, action) => {
     case UPDATE_APARTMENT: {
       const apartments = state.apartments;
       const apartment = action.payload;
-      const index = apartments.findIndex(item => item._id === apartment._id);
+      const index = apartments.findIndex(item => item.id === apartment.id);
 
       if (~index) {
         apartments[index] = apartment;
@@ -37,7 +37,7 @@ export default (state = {}, action) => {
 
     case DELETE_APARTMENT: {
       const apartments = state.apartments.filter(
-        apt => apt._id !== action.payload
+        apt => apt.id !== action.payload
       );
       return { ...state, apartments: apartments };
     }

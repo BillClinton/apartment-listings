@@ -9,6 +9,8 @@ const ApartmentList = () => {
   const { store } = useContext(ApartmentStore);
   const apartments = store.data;
 
+  console.log('apartment list');
+
   return (
     <div className="apartment-list">
       <h1 className={styles.pageTitle}>
@@ -24,8 +26,9 @@ const ApartmentList = () => {
         {apartments.length ? (
           <>
             {apartments.map(apartment => {
+              console.log('apartment', apartment);
               return (
-                <ApartmentDetails apartment={apartment} key={apartment._id} />
+                <ApartmentDetails apartment={apartment} key={apartment.id} />
               );
             })}
             {/* TODO: incorporate this into ui or lose it */}
