@@ -1,5 +1,4 @@
 const Document = require('./Document');
-const util = require('util');
 
 const DocumentStore = function(firebaseAdmin) {
   this._admin = firebaseAdmin;
@@ -14,21 +13,15 @@ const DocumentStore = function(firebaseAdmin) {
 
     /**
      * Create static db property on Document class if it doesn't already exist.
-     * This will be shared by all subclasses and will be accessible to static methods.
+     * This will be shared by all subclasses and will be accessible in static methods.
      */
     if (!Document.db) {
-      // Object.defineProperty(Document, 'db', {
-      //   value: db,
-      //   writable: false,
-      //   enumerable: true,
-      //   configurable: false
-      // });
       Document.db = db;
     }
 
     /**
      * Create _db property on Document prototype if it doesn't already exist.
-     * This will be shared by all subclasses and will be accessible to instance methods.
+     * This will be shared by all subclasses and will be accessible in class instances.
      */
     if (!Document.prototype._db) {
       Document.prototype._db = db;
