@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "npx nodemon react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "firebase deploy",
