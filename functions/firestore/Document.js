@@ -6,7 +6,6 @@ const Document = class {
   constructor(data) {
     this._fields = {};
     if (data) {
-      console.log(data.id);
       this._id = data.id;
       delete data.id;
     }
@@ -89,25 +88,23 @@ const Document = class {
       });
   }
 
-  static async findOne(condition) {
-    // Currently only need 1 condition
-    const property = Object.keys(condition)[0];
-    const val = condition[property];
+  static async findOne(conditions) {
+    let collection = this.db.collection(this.collection);
 
-    if (property && val) {
-      return this.db
-        .collection(this.collection)
-        .where(property, '==', val)
-        .limit(1)
-        .get()
-        .then(snapshot => {
-          const doc = snapshot.docs[0];
-          if (doc) {
-            return new this.documentClass({ id: doc.id, ...doc.data() });
-          }
-        });
-    }
-    return false;
+    conditions.forEach(([property, operator, value]) => {
+      console.log(property, operator, value);
+      collection = collection.where(property, operator, value);
+    });
+
+    return collection
+      .limit(1)
+      .get()
+      .then(snapshot => {
+        const doc = snapshot.docs[0];
+        if (doc) {
+          return new this.documentClass({ id: doc.id, ...doc.data() });
+        }
+      });
   }
 
   static async findById(id) {
@@ -130,8 +127,6 @@ const Document = class {
 
     const data = this.toObject();
     const id = this._id;
-    console.log(id);
-    console.log(`isnew: ${this.isNew()}`);
 
     this.validateAll();
     if (!this.isValid()) {
