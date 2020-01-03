@@ -7,7 +7,7 @@ const ApartmentDetails = ({ apartment }) => {
   console.log('Apartment Details');
   return (
     <li>
-      <div>{apartment.name}i yoyoyoy</div>
+      <div>{apartment.name}</div>
       <div>{apartment.rent}</div>
       <div>
         <Link to={`/admin/apartments/edit/${apartment.id}`}>
