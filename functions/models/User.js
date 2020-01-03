@@ -5,7 +5,7 @@ const db = require('../firestore/db.js');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const webTokenPassphrase = require('../firestore/webTokenPassphrase.json');
+const webTokenPassphrase = require('../middleware/webTokenPassphrase.json');
 
 const fields = {
   name: {
@@ -57,7 +57,7 @@ User.prototype.generateAuthToken = async function() {
     webTokenPassphrase.token
   );
 
-  user.setValue('tokens', tokens.concat({ token }));
+  user.setValue('tokens', tokens.concat(token));
 
   await user.save();
 
@@ -85,7 +85,9 @@ User.prototype.toJSON = function() {
  * @returns {Object} user The user JSON object
  */
 User.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email });
+  const conditions = [];
+  conditions.push(['email', '==', email]);
+  const user = await User.findOne(conditions);
 
   if (!user) {
     throw new Error('Unable to login');
