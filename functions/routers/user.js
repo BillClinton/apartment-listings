@@ -6,6 +6,7 @@ const router = new express.Router();
 //const auth = require('../middleware/auth');
 const errorFormat = require('./errorFormat');
 const User = require('../models/User');
+const auth = require('../middleware/auth');
 const bcrypt = require('bcryptjs');
 
 const util = require('util');
@@ -57,11 +58,12 @@ router.post('/api/users/login', async (req, res) => {
  *
  * @apierror (error 4xx) 400 Bad Request
  */
-router.post('/users/logout', async (req, res) => {
+router.post('/api/users/logout', auth, async (req, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter(token => {
-      return token.token !== req.token;
-    });
+    req.user.setValue(
+      'tokens',
+      req.user.getValue('tokens').filter(token => token !== req.token)
+    );
     await req.user.save();
     res.send();
   } catch (e) {
@@ -78,7 +80,7 @@ router.post('/users/logout', async (req, res) => {
  *
  * @apierror (error 4xx) 400 Bad Request
  */
-router.post('/users/logoutAll', async (req, res) => {
+router.post('/api/users/logoutAll', async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
