@@ -82,8 +82,7 @@ router.patch('/api/apartments/:id', async (req, res) => {
 
 router.delete('/api/apartments/:id', async (req, res) => {
   try {
-    const data = await Apartment.findById(req.params.id);
-    const apartment = new Apartment(data);
+    const apartment = await Apartment.findById(req.params.id);
 
     if (!apartment) {
       return res.status(404).send();
