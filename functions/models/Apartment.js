@@ -28,10 +28,7 @@ const fields = {
   },
   contact: {
     type: String,
-    trim: true,
-    required: true,
-    maxlength: 6,
-    minlength: 3
+    trim: true
   },
   available: {
     type: String,
