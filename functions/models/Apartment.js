@@ -37,6 +37,10 @@ const fields = {
   active: {
     type: Boolean,
     default: true
+  },
+  images: {
+    type: Array,
+    default: []
   }
 };
 
