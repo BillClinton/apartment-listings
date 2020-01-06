@@ -1,7 +1,7 @@
 /**
  * Apartment model
  */
-const db = require('../firestore/db.js');
+const db = require('../firestore/db');
 
 const fields = {
   name: {

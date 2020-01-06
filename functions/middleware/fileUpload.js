@@ -1,5 +1,5 @@
 const multer = require('multer');
-const db = require('../firestore/db.js');
+const db = require('../firestore/db');
 
 const {
   storageBucketName,

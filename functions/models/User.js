@@ -1,7 +1,7 @@
 /**
  * User model
  */
-const db = require('../firestore/db.js');
+const db = require('../firestore/db');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
