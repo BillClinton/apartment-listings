@@ -12,7 +12,7 @@ const Document = class {
   }
 
   toObject() {
-    const data = {};
+    const data = { id: this._id };
 
     for (const key in this._fields) {
       data[key] = this._fields[key].value;
@@ -21,7 +21,7 @@ const Document = class {
   }
 
   toJSON() {
-    return { id: this._id, ...this.toObject() };
+    return this.toObject();
   }
 
   setValue(fieldName, val, ignoreDirty) {
@@ -92,7 +92,6 @@ const Document = class {
     let collection = this.db.collection(this.collection);
 
     conditions.forEach(([property, operator, value]) => {
-      console.log(property, operator, value);
       collection = collection.where(property, operator, value);
     });
 
