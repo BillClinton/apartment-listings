@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://my-project.firebaseio.com",
+  "storageBucketURL": "https://my-project.firebaseio.com",
+  "storageBucketName": "my-project.appspot.com",
+  "storagePublicURL": "https://storage.googleapis.com/"
+}
