@@ -3,15 +3,13 @@
  */
 const express = require('express');
 const router = new express.Router();
-
+const fileUpload = require('../middleware/fileUpload');
 const errorFormat = require('./errorFormat');
 const Apartment = require('../models/Apartment');
 
 router.get('/api/apartments', async (req, res) => {
   try {
-    console.log('getting apts');
     const apartments = await Apartment.find({});
-    console.log('got apts');
     res.send(apartments);
   } catch (e) {
     res.status(500).send({ error: e.message });
@@ -97,6 +95,26 @@ router.delete('/api/apartments/:id', async (req, res) => {
   } catch (e) {
     res.status(400).send({ error: e.message });
   }
+});
+
+router.post('/api/apartments/:id/upload', fileUpload, async (req, res) => {
+  const apartment = await Apartment.findById(req.params.id);
+
+  if (!apartment) {
+    return res.status(404).send();
+  }
+
+  const files = [];
+
+  req.files.forEach(file => {
+    delete file.fieldname;
+    delete file.buffer;
+    files.push(file);
+  });
+
+  apartment.setValue('images', apartment.getValue('images').concat(files));
+  apartment.save();
+  res.status(200).send(apartment);
 });
 
 module.exports = router;
