@@ -3,12 +3,14 @@ const Document = require('./Document');
 const DocumentStore = function(firebaseAdmin) {
   this._admin = firebaseAdmin;
 
-  this.connect = (databaseURL, credential) => {
-    this._admin.initializeApp({ credential, databaseURL });
+  this.connect = (credential, dbURL, bucketURL, bucketName) => {
+    this._admin.initializeApp({ credential, dbURL, bucketURL });
     this._db = this._admin.firestore();
+    this.storage = this._admin.storage();
+    this.bucketName = bucketName;
   };
 
-  this.model = (collection, fields) => {
+  this.storageBucket = this.model = (collection, fields) => {
     const db = this._db;
 
     /**
