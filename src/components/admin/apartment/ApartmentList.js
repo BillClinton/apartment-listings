@@ -3,7 +3,6 @@ import { ApartmentStore } from '../../../contexts/ApartmentStore';
 import ApartmentDetails from './ApartmentDetails';
 import DeleteApartment from './DeleteApartment';
 import NewButton from './NewButton';
-import ReloadButton from './ReloadButton';
 import LoadingMessage from '../../layout/LoadingMessage';
 import styles from './styles/ApartmentList.module.scss';
 
@@ -44,8 +43,6 @@ const ApartmentList = () => {
                 />
               );
             })}
-            {/* TODO: incorporate this into ui or lose it */}
-            <ReloadButton />
           </>
         ) : (
           <LoadingMessage />
