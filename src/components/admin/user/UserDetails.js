@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as EditIcon } from '../../icons/edit-solid.svg';
 import { ReactComponent as DeleteIcon } from '../../icons/minus-circle-solid.svg';
 
-const UserDetails = ({ user }) => {
+const UserDetails = ({ user, onDelete }) => {
   return (
     <li>
       <div>{user.name}</div>
@@ -13,9 +13,9 @@ const UserDetails = ({ user }) => {
         <Link to={`/admin/users/edit/${user.id}`}>
           <EditIcon />
         </Link>
-        <Link to={`/admin/users/delete/${user.id}`}>
-          <DeleteIcon />
-        </Link>
+        <a role="button" onClick={() => onDelete(user.id)}>
+          <DeleteIcon className="delete" />
+        </a>
       </div>
     </li>
   );

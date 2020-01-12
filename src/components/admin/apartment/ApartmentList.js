@@ -1,15 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ApartmentStore } from '../../../contexts/ApartmentStore';
 import ApartmentDetails from './ApartmentDetails';
+import DeleteApartment from './DeleteApartment';
 import NewButton from './NewButton';
 import ReloadButton from './ReloadButton';
+import LoadingMessage from '../../layout/LoadingMessage';
 import styles from './styles/ApartmentList.module.scss';
 
 const ApartmentList = () => {
   const { store } = useContext(ApartmentStore);
   const apartments = store.data;
 
-  console.log('apartment list');
+  const [deleteId, setDeleteId] = useState(false);
+  const onDismissModal = () => setDeleteId(false);
+  const onDelete = id => setDeleteId(id);
+  const onConfirmDelete = id => {
+    setDeleteId(false);
+    store.destroy(id);
+  };
+
+  console.log('id', deleteId);
 
   return (
     <div className="apartment-list">
@@ -26,18 +36,26 @@ const ApartmentList = () => {
         {apartments.length ? (
           <>
             {apartments.map(apartment => {
-              console.log('apartment', apartment);
               return (
-                <ApartmentDetails apartment={apartment} key={apartment.id} />
+                <ApartmentDetails
+                  apartment={apartment}
+                  key={apartment.id}
+                  onDelete={onDelete}
+                />
               );
             })}
             {/* TODO: incorporate this into ui or lose it */}
             <ReloadButton />
           </>
         ) : (
-          <div className={styles.loading}>loading</div>
+          <LoadingMessage />
         )}
       </ul>
+      <DeleteApartment
+        aptId={deleteId}
+        onConfirmDelete={onConfirmDelete}
+        onDismissModal={onDismissModal}
+      />
     </div>
   );
 };

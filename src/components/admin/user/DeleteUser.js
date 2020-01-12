@@ -1,30 +1,22 @@
 import React, { useContext } from 'react';
 import Modal from '../../layout/Modal';
-import history from '../../../history';
-import { UserStore } from '../../../contexts/UserStore';
 
-const DeleteUser = ({ match }) => {
-  const id = match.params.id;
-  const onDismiss = () => history.goBack();
-
-  const { store } = useContext(UserStore);
-  const onDelete = id => store.destroy(id);
-
+const DeleteUser = ({ userId, onConfirmDelete, onDismissModal }) => {
   const actions = (
     <>
-      <button onClick={() => onDelete(id)}>Delete</button>
-      <button onClick={() => onDismiss()}>Cancel</button>
+      <button onClick={() => onConfirmDelete(userId)}>Delete</button>
+      <button onClick={() => onDismissModal()}>Cancel</button>
     </>
   );
 
-  return (
+  return userId ? (
     <Modal
       title="Delete User"
       content="Are you sure you want to delete this user?"
       actions={actions}
-      onDismiss={onDismiss}
+      onDismiss={onDismissModal}
     />
-  );
+  ) : null;
 };
 
 export default DeleteUser;

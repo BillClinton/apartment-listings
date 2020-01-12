@@ -22,11 +22,6 @@ function ApartmentHome() {
           path="/admin/apartments/edit/:id"
           component={EditApartment}
         />
-        <Route
-          exact
-          path="/admin/apartments/delete/:id"
-          component={DeleteApartment}
-        />
       </ApartmentStoreProvider>
     </>
   );

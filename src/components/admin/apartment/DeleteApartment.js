@@ -1,30 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Modal from '../../layout/Modal';
-import history from '../../../history';
-import { ApartmentStore } from '../../../contexts/ApartmentStore';
 
-const DeleteApartment = ({ match }) => {
-  const id = match.params.id;
-  const onDismiss = () => history.goBack();
-
-  const { store } = useContext(ApartmentStore);
-  const onDelete = id => store.destroy(id);
-
+const DeleteApartment = ({ aptId, onConfirmDelete, onDismissModal }) => {
   const actions = (
     <>
-      <button onClick={() => onDelete(id)}>Delete</button>
-      <button onClick={() => onDismiss()}>Cancel</button>
+      <button onClick={() => onConfirmDelete(aptId)}>Delete</button>
+      <button onClick={() => onDismissModal()}>Cancel</button>
     </>
   );
 
-  return (
+  return aptId ? (
     <Modal
       title="Delete Apartment"
       content="Are you sure you want to delete this apartment?"
       actions={actions}
-      onDismiss={onDismiss}
+      onDismiss={onDismissModal}
     />
-  );
+  ) : null;
 };
 
 export default DeleteApartment;

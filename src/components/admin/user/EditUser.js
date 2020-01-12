@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { UserStore } from '../../../contexts/UserStore';
 import EditUserForm from './EditUserForm';
+import LoadingMessage from '../../layout/LoadingMessage';
 
 const EditUser = ({ match }) => {
   const { store } = useContext(UserStore);
@@ -12,7 +13,7 @@ const EditUser = ({ match }) => {
     store.loadOne(id);
   }
 
-  return user ? <EditUserForm user={user} /> : <div>loading form...</div>;
+  return user ? <EditUserForm user={user} /> : <LoadingMessage />;
 };
 
 export default EditUser;

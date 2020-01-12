@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as EditIcon } from '../../icons/edit-solid.svg';
 import { ReactComponent as DeleteIcon } from '../../icons/minus-circle-solid.svg';
 
-const ApartmentDetails = ({ apartment }) => {
+const ApartmentDetails = ({ apartment, onDelete }) => {
   console.log('Apartment Details');
   return (
     <li>
@@ -13,9 +13,9 @@ const ApartmentDetails = ({ apartment }) => {
         <Link to={`/admin/apartments/edit/${apartment.id}`}>
           <EditIcon className="edit" />
         </Link>
-        <Link to={`/admin/apartments/delete/${apartment.id}`}>
+        <a onClick={() => onDelete(apartment.id)}>
           <DeleteIcon className="delete" />
-        </Link>
+        </a>
       </div>
     </li>
   );
