@@ -78,6 +78,5 @@ export const deleteApartment = (id, dispatch) => {
       type: DELETE_APARTMENT,
       payload: id
     });
-    history.goBack();
   });
 };

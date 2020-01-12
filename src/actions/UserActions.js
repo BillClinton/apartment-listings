@@ -84,6 +84,5 @@ export const deleteUser = (id, authHeader, dispatch) => {
       type: DELETE_USER,
       payload: id
     });
-    history.goBack();
   });
 };
