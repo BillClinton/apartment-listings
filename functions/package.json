@@ -16,8 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fast-crc32c": "^2.0.0",
-    "firebase-admin": "^8.6.0",
-    "firebase-functions": "^3.3.0",
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^3.24.1",
     "multer": "github:emadalam/multer#master",
     "validate": "^5.1.0"
   },
